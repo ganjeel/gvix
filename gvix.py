@@ -5,19 +5,19 @@ import wikipedia
 import webbrowser
 import os
 import smtplib
+import json
 
+################################################################################
 
-
-##################################################################
-MASTER = "Gian"
-wikipedia.set_lang("es")
 engine = pyttsx3.init("sapi5")
 voices = engine.getProperty("voices")
 engine.setProperty("voice", voices[0].id)
 mic = sr.Microphone()
-r = sr.Recognizer()
+recon = sr.Recognizer()
+wikipedia.set_lang("es")
+cwd = os.getcwd()
 
-#def wiki_search():
+################################################################################
 
 def takeCommand(mic, r):
     with mic as source:
@@ -37,13 +37,26 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+def wiki(search):
+    return str(wikipedia.summary(search, sentences = 1))
+    
+def browse(keyword):
+    keywords = {
+        "youtube" : "https://www.youtube.com",
+        "raider" : "https://www.raider.io"
+    }
+    
+    keywords = json.load("{}/settings/url.json".format(cwd))
 
+    try:
+        webbrowser.open(keywords[keyword])
+    except webbrowser.Error:
+        return error
 
-####################################################################
-wikipedia.set_lang("es")
+################################################################################
+
 query = str(takeCommand(mic, r))
 query = query.split()
-
 
 for order, word in enumerate(query):
     query[order] = query[order].lower()
@@ -54,13 +67,14 @@ if "wikipedia" in query:
 
     ans = str(takeCommand(mic, r))
 
-    wiki_summary = wikipedia.summary(ans, sentences=2)
+    wiki_summary = wiki(ans)
 
     speak("El resultado de la busqueda de {} es".format(ans))
     speak(str(wiki_summary))
-elif "youtube" in query:
-    try:
-        #webbrowser.get("google-chrome").open_new("https://www.youtube.com")
-        webbrowser.open("https://www.youtube.com")
-    except webbrowser.Error:
-        print("fFFFFFF")
+
+if "abrir" or "navegador" or "chrome" in query:
+    speak("Que página deseas abrir?")
+
+    ans = str(takeCommand(mic, r))
+
+    browse(ans)
