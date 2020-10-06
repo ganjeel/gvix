@@ -23,12 +23,10 @@ def takeCommand(mic, r):
     with mic as source:
         print("Contame bro..")
         audio = r.listen(source)
-
     try:
         print("Interpretando")
         query = r.recognize_google(audio, language="es-ES")
         print(f"Dijiste: {query} \n")
-
     except Exception:
         print("Repetimelo bro")
     return query
@@ -41,11 +39,6 @@ def wiki(search):
     return str(wikipedia.summary(search, sentences = 1))
     
 def browse(keyword):
-    keywords = {
-        "youtube" : "https://www.youtube.com",
-        "raider" : "https://www.raider.io"
-    }
-    
     keywords = json.load("{}/settings/url.json".format(cwd))
 
     try:
@@ -55,7 +48,7 @@ def browse(keyword):
 
 ################################################################################
 
-query = str(takeCommand(mic, r))
+query = str(takeCommand(mic, recon))
 query = query.split()
 
 for order, word in enumerate(query):
@@ -65,7 +58,7 @@ for order, word in enumerate(query):
 if "wikipedia" in query:
     speak("Que deseas buscar en wikipedia?")
 
-    ans = str(takeCommand(mic, r))
+    ans = str(takeCommand(mic, recon))
 
     wiki_summary = wiki(ans)
 
@@ -75,6 +68,6 @@ if "wikipedia" in query:
 if "abrir" or "navegador" or "chrome" in query:
     speak("Que página deseas abrir?")
 
-    ans = str(takeCommand(mic, r))
+    ans = str(takeCommand(mic, recon))
 
     browse(ans)
