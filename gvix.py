@@ -1,54 +1,51 @@
-import pyttsx3
-import speech_recognition as sr
+import speech_recognition
 import datetime
 import wikipedia
 import webbrowser
 import os
 import smtplib
 import json
+from gtts import gTTS as speak
 
 ################################################################################
 
-engine = pyttsx3.init("sapi5")
-voices = engine.getProperty("voices")
-engine.setProperty("voice", voices[0].id)
-mic = sr.Microphone()
-recon = sr.Recognizer()
+
+
+mic = speech_recognition.Microphone()
+recognizer = speech_recognition.Recognizer()
+
+
 wikipedia.set_lang("es")
 cwd = os.getcwd()
 
 ################################################################################
 
-def takeCommand(mic, r):
-    with mic as source:
-        print("Contame bro..")
-        audio = r.listen(source)
-    try:
-        print("Interpretando")
-        query = r.recognize_google(audio, language="es-ES")
-        print(f"Dijiste: {query} \n")
-    except Exception:
-        print("Repetimelo bro")
-    return query
+def load_data(where):
+    with open(where) as content:
+        return json.load(content)
 
-def speak(text):
-    engine.say(text)
-    engine.runAndWait()
+def takeCommand(mic, recognizer):
+    with mic as source:
+        audio = recognizer.listen(source)
+    try:
+        return recognizer.recognize_google(audio, language="es-ES")
+    except Exception:
+        return None
 
 def wiki(search):
     return str(wikipedia.summary(search, sentences = 1))
     
-def browse(keyword):
-    keywords = json.load("{}/settings/url.json".format(cwd))
-
+def browse(keyword, keywords):
     try:
         webbrowser.open(keywords[keyword])
     except webbrowser.Error:
-        return error
+        return False
 
 ################################################################################
 
-query = str(takeCommand(mic, recon))
+keywords = load_data("settings/url.json")
+
+query = str(takeCommand(mic, recognizer))
 query = query.split()
 
 for order, word in enumerate(query):
@@ -58,7 +55,7 @@ for order, word in enumerate(query):
 if "wikipedia" in query:
     speak("Que deseas buscar en wikipedia?")
 
-    ans = str(takeCommand(mic, recon))
+    ans = str(takeCommand(mic, recognizer))
 
     wiki_summary = wiki(ans)
 
@@ -68,6 +65,6 @@ if "wikipedia" in query:
 if "abrir" or "navegador" or "chrome" in query:
     speak("Que página deseas abrir?")
 
-    ans = str(takeCommand(mic, recon))
+    ans = str(takeCommand(mic, recognizer))
 
-    browse(ans)
+    browse(ans, keywords)
