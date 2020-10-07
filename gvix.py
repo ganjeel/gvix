@@ -25,11 +25,15 @@ def load_data(where):
         return json.load(content)
 
 def takeCommand(mic, recognizer):
+    print("Recon inicializado")
     with mic as source:
+        print("Escuchando")
         audio = recognizer.listen(source)
     try:
+        print("Interpretando")
         return recognizer.recognize_google(audio, language="es-ES")
     except Exception:
+        print("Error en interpretación")
         return None
 
 def wiki(search):
@@ -45,26 +49,28 @@ def browse(keyword, keywords):
 
 keywords = load_data("settings/url.json")
 
-query = str(takeCommand(mic, recognizer))
-query = query.split()
-
-for order, word in enumerate(query):
-    query[order] = query[order].lower()
+# query = str(takeCommand(mic, recognizer))
+# query = query.split()
+speak("Hola mundo")
 
 
-if "wikipedia" in query:
-    speak("Que deseas buscar en wikipedia?")
+# for order, word in enumerate(query):
+#     query[order] = query[order].lower()
 
-    ans = str(takeCommand(mic, recognizer))
 
-    wiki_summary = wiki(ans)
+# if "wikipedia" in query:
+#     speak("Que deseas buscar en wikipedia?")
 
-    speak("El resultado de la busqueda de {} es".format(ans))
-    speak(str(wiki_summary))
+#     ans = str(takeCommand(mic, recognizer))
 
-if "abrir" or "navegador" or "chrome" in query:
-    speak("Que página deseas abrir?")
+#     wiki_summary = wiki(ans)
 
-    ans = str(takeCommand(mic, recognizer))
+#     speak("El resultado de la busqueda de {} es".format(ans))
+#     speak(str(wiki_summary))
 
-    browse(ans, keywords)
+# if "abrir" or "navegador" or "chrome" in query:
+#     speak("Que página deseas abrir?")
+
+#     ans = str(takeCommand(mic, recognizer))
+
+#     browse(ans, keywords)
