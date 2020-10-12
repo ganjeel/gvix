@@ -1,0 +1,26 @@
+{
+    "settings" : {
+        "master" : "capo",
+        "slave" : "jaime"
+    },
+
+    "programs" : {
+        "lol" : "C:\\Riot Games\\League of Legends\\LeagueClient.exe",
+        "steam" : "C:\\Program Files (x86)\\Steam\\steam.exe"
+    },
+    
+    "urls" : {
+        "raiderio" : "https://raider.io/",
+        "google" : "https://www.google.com/",
+        "facebook" : "https://www.facebook.com/",
+        "netflix" : "https://www.netflix.com/browse",
+        "primevideo" : "https://www.primevideo.com/",
+        "crunchy" : "https://www.crunchyroll.com/es",
+        "twitch" : "https://www.twitch.tv/",
+        "mercadolibre" : "https://www.mercadolibre.com.ar/",
+        "animeflv" : "https://animeflv.tv/",
+        "hotmail" : "https://outlook.live.com/mail/0/inbox",
+        "gmail" : "https://mail.google.com/mail/u/0/#inbox",
+        "opgg" : "https://las.op.gg/champion/statistics"
+        }
+}
