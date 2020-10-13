@@ -56,7 +56,7 @@ class apps():
 		self.speaker.say(what)
 
 	# hacer sonido
-	def beep(self):
+	def beep(self, query):
 		beep()
 
 	# abrir en el navegador

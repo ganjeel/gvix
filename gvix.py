@@ -3,15 +3,12 @@ from resources.main import apps
 gvix = apps()
 
 gvix.say("Bienvenido {}, soy {}, su asistente virtual".format(gvix.master, gvix.slave))
-print("Bienvenido {}, soy {}, su asistente virtual".format(gvix.master, gvix.slave))
 gvix.say("Recuerde que debe esperar a escuchar el sonido:")
-print("Recuerde que debe esperar a escuchar el sonido:")
 
 for i in range(2):
 	gvix.beep()
 
 gvix.say("para comenzar a hablar, señor")
-print("para comenzar a hablar, señor")
 
 while True:
 
