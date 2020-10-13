@@ -17,19 +17,23 @@ class gsearch():
 
 	# genera una frase o palabra a partir de un array
 	def phraser(self, query):
-		phrase = ""
-		if len(query) > 1:
-			for words in query:
-				phrase = "{} {}".format(phrase, words)
-			return phrase
-		else:
-			return query[0]
+		try:
+			phrase = ""
+			if len(query) > 1:
+				for words in query:
+					phrase = "{} {}".format(phrase, words)
+				return phrase
+			else:
+				return query[0]
+		except:
+			return ""
 
 	# limpia el query de palabras como slave y google
 	def cleaner(self, query):
 		for words in [self.__slave,
 			"google",
 			"buscar",
+			"en"
 			]:
 			while words in query:
 				query.remove(words)

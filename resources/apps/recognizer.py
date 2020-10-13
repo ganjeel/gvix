@@ -11,13 +11,19 @@ class recognizer(object):
         # instancias para micrófono y reconocedor
         self.__mic = speech_recognition.Microphone()
         self.__recognizer = speech_recognition.Recognizer()
+        self.__recognizer.energy_threshold = 400 
+        self.__recognizer.dynamic_energy_threshold = False
+        self.__recognizer.pause_threshold = 0.8
 
     def hear(self):    
         query = []
         with self.__mic as source:
-            for i in range(2):
-                beep()
-            audio = self.__recognizer.listen(source)
+            # for i in range(2):
+            #     beep()
+            try:
+                audio = self.__recognizer.listen(source, timeout = 1)
+            except:
+                audio = None
         try:
             audio2text = str(self.__recognizer.recognize_google(audio, language="es-ES")).lower()
             print(audio2text)
@@ -25,6 +31,5 @@ class recognizer(object):
                 query.append(word.lower())
             return query
         
-        except speech_recognition.UnknownValueError:
-            self.__speaker.say("No te entendí, por favor, repíteme")
-            return "None"
+        except:
+            return []

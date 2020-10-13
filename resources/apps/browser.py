@@ -71,7 +71,7 @@ class browser():
                     # contenga solo esta palabra, esto no afecta a la 
                     # búsqueda en sí
                     if self.yn_question():
-                        self.__gsearch.searcher(query)
+                        self.__gsearch.search(self.__gsearch.phraser(query))
                         break
                     # si la respuesta es no, pregunto si desea repetir la 
                     # página a abrir o si desea salir

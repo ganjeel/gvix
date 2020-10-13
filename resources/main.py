@@ -8,7 +8,7 @@ from resources.apps.browser import browser
 from resources.apps.gsearch import gsearch
 from resources.apps.launcher import launcher
 from resources.apps.wiki import wiki
-# from resources.apps.discord import discord
+from resources.apps.discord import discord
 
 class apps():
 	# instancias y parámetros
@@ -22,21 +22,23 @@ class apps():
 		self.gsearch = gsearch()
 		self.launcher = launcher()
 		self.wiki = wiki()
+		self.discord = discord()
 
-		self.wakewords = {
+		self.commands = {
 			"abrir" : self.browse,
 			"buscar en google" : self.search,
 			"iniciar" : self.launch,
 			"wikipedia" : self.wikipedia,
-			"salir" : self.off
+			"salir" : self.off,
+			"discord" : self.discord_commands
 		}
 
-		self.categories = []
-		for words in self.wakewords:
-			self.categories.append(words)
+	def off(self, query):
+		off.off()
 
-	def off(self):
-		pass
+	# hacer sonido
+	def beep(self):
+		beep()
 
 	# escucha y devulve una lista de palabras que escuchó
 	def hear(self):
@@ -48,16 +50,14 @@ class apps():
 		for words in query:		
 			phrase += words
 			phrase += " "
-		category = process.extractOne(phrase, self.categories)
+		category = process.extractOne(phrase, list(self.commands.keys()))
 		return category[0]
 
 	# tts [what]
 	def say(self, what):
 		self.speaker.say(what)
 
-	# hacer sonido
-	def beep(self, query):
-		beep()
+
 
 	# abrir en el navegador
 	def browse(self, query):
@@ -75,5 +75,5 @@ class apps():
 		self.wiki.wiki()
 
 	# toggles discord
-	# def discord(self, query):
-	# 	discord(query)
+	def discord_commands(self, query):
+		self.discord.do(query)

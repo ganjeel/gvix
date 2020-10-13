@@ -1,15 +1,27 @@
+from fuzzywuzzy import process
 from pynput.keyboard import Key, Controller
-        	
 
-def discord(query):
-	# función que activa el bind ctrl + [key]
-	def ctrl_hotkey(key):
+keyboard = Controller()
+
+class discord():
+	def __init__(self):
+		self.__disc_commands = {
+			"micro" : "p",
+			"auri" : "o"
+		}
+		# self.keyboard = Controller()
+
+	def ctrl_hotkey(self, key):
 		with keyboard.pressed(Key.ctrl):
 			keyboard.press(key)
 			keyboard.release(key)
 
-	for word in query:
-		if word == "micro":
-			ctrl_hotkey("o")
-       	elif word in ["auri", "audi", "auris", "audis"]:
-        	ctrl_hotkey("p")
+	def do(self, query):
+		# función que activa el bind ctrl + [key]
+		for words in query:
+			phrase = ""
+			for words in query:		
+				phrase += words
+				phrase += " "
+			category = process.extractOne(phrase, list(self.__disc_commands.keys()))[0]
+			self.ctrl_hotkey(self.__disc_commands[category])
