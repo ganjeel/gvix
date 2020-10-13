@@ -10,6 +10,8 @@
     },
     
     "urls" : {
+        "mastermind" : "https://mastermind.ac",
+        "youtube" : "https://youtube.com",
         "raiderio" : "https://raider.io/",
         "google" : "https://www.google.com/",
         "facebook" : "https://www.facebook.com/",
